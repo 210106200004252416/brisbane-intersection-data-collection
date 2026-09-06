@@ -1,0 +1,26 @@
+name: Test Brisbane CBD API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test all 65 CBD intersections
+        run: python fetch_intersection_data.py
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: cbd-api-test-results
+          path: data/
